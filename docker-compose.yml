@@ -4,7 +4,9 @@ services:
     container_name: redis
     hostname: redis
     image: "redis:alpine"
-    command: ["redis-server", "--appendonly", "yes", "--requirepass", "@db.password1"]
+    env_file:
+      - ./redis.env
+    command: ["redis-server", "--appendonly", "yes", "--requirepass", "${REDIS_PWD}"]
     ports:
         - "6379:6379"
     volumes:
@@ -14,6 +16,8 @@ services:
     container_name: mongo
     hostname: mongo
     image: "mongo:latest"
+    env_file:
+        - ./mongo.env
     volumes:
       - ./mongodb/mongod.conf:/etc/mongod.conf
       # - ./mongodb/initdb.d:/docker-entrypoint-initdb.d
@@ -22,11 +26,7 @@ services:
       - ../data/home/mongodb:/home/mongodb
     # command: [ "-f", "/etc/mongod.conf" ]
     environment:
-        MONGO_INITDB_ROOT_USERNAME: root
-        MONGO_INITDB_ROOT_PASSWORD: TestWont123org
         MONGO_INITDB_DATABASE: mydb
-        # MONGO_INITDB_USERNAME: myTester
-        # MONGO_INITDB_PASSWORD: testWont123org
     ports:
       - "27017:27017"
     
