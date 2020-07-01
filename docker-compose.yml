@@ -6,7 +6,7 @@ services:
     image: "redis:alpine"
     env_file:
       - ./redis.env
-    command: ["redis-server", "--appendonly", "yes", "--requirepass", "${REDIS_PWD}"]
+    command: ["redis-server", "--appendonly", "yes", "--requirepass", "$${REDIS_PWD}"]
     ports:
         - "6379:6379"
     volumes:
@@ -25,8 +25,6 @@ services:
       - ../data/mongodb-log:/var/log/mongodb
       - ../data/home/mongodb:/home/mongodb
     # command: [ "-f", "/etc/mongod.conf" ]
-    environment:
-        MONGO_INITDB_DATABASE: mydb
     ports:
       - "27017:27017"
     
