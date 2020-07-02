@@ -39,6 +39,14 @@ services:
       - ./nginx/conf.d/:/etc/nginx/conf.d/
       - ../data/nginx/:/usr/share/nginx/html/
       - ../data/nginx/logs/:/var/log/nginx/
-      
+  haproxy:
+    container_name: haproxy
+    image: haproxy:latest
+    ports:
+      - "80:80"
+    volumes:
+      - ./haproxy/haproxy.cfg:/usr/local/etc/haproxy/haproxy.cfg
+
+
   
 
