@@ -1,4 +1,4 @@
-FROM haproxy
+FROM haproxy:latest
 
 ENV HAPROXY_USER haproxy
 
