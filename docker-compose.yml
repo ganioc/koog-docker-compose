@@ -32,8 +32,10 @@ services:
     container_name: webserver
     env_file:
       - ./nginx.env
-    ports:
-      - "8080:80"
+    # ports:
+    #   - "80:80"
+    expose:
+      - "80"
     volumes:
       - ./nginx/nginx.conf:/etc/nginx/nginx.conf
       - ./nginx/conf.d/:/etc/nginx/conf.d/
@@ -41,12 +43,19 @@ services:
       - ../data/nginx/logs/:/var/log/nginx/
   haproxy:
     container_name: haproxy
+    depends_on:
+      - webserver
     image: boxshell/haproxy:1.0.0
     ports:
       - "80:80"
       - "1936:1936"
+    expose:
+      - "80"
+      - "1936"
     volumes:
       - ./haproxy/haproxy.cfg:/usr/local/etc/haproxy/haproxy.cfg
+    links:
+      - webserver
 
 
   
