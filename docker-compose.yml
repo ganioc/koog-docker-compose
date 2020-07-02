@@ -41,9 +41,10 @@ services:
       - ../data/nginx/logs/:/var/log/nginx/
   haproxy:
     container_name: haproxy
-    image: haproxy:latest
+    image: boxshell/haproxy:1.0.0
     ports:
       - "80:80"
+      - "1936:1936"
     volumes:
       - ./haproxy/haproxy.cfg:/usr/local/etc/haproxy/haproxy.cfg
 
