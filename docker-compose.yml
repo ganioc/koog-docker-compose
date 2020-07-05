@@ -6,12 +6,13 @@ services:
     image: "redis:alpine"
     env_file:
       - ./redis.env
-    command: ["redis-server", "--appendonly", "yes", "--requirepass", "$${REDIS_PWD}"]
+    #command: ["redis-server", "--appendonly", "yes", "--requirepass", $REDIS_PWD]
+    command: ["redis-server", "/usr/local/etc/redis/redis.conf"]
     ports:
         - "6379:6379"
     volumes:
         - $PWD/../data/redis:/var/lib/redis
-        - $PWD/redis.config:/usr/local/etc/redis/redis.conf
+        - $PWD/redis.conf:/usr/local/etc/redis/redis.conf
   mongodb:
     container_name: mongo
     hostname: mongo
@@ -24,7 +25,7 @@ services:
       - ../data/mongodb:/data/db
       - ../data/mongodb-log:/var/log/mongodb
       - ../data/home/mongodb:/home/mongodb
-    # command: [ "-f", "/etc/mongod.conf" ]
+    command: [ "-f", "/etc/mongod.conf" ]
     ports:
       - "27017:27017"
   webserver:
